@@ -1,0 +1,31 @@
+---
+title: "An Interactive Plot of Gapminder Data"
+author: "Connor Claypool"
+date: "27 July 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+***
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+library(dplyr)
+library(plotly)
+library(gapminder)
+data(gapminder)
+
+gapminder <- gapminder %>% filter(year == "2007")
+
+x <- list(title = "GDP Per Capita (USD, Inflation Adjusted)")
+y <- list(title = "Life Expectancy (Years)")
+
+plot_ly(gapminder, x = ~gdpPercap, y = ~lifeExp, 
+        type = "scatter", mode = "markers", 
+        color = ~continent, text = ~country) %>% 
+    layout(xaxis = x, yaxis = y, title = "GDP Per Capita and Life Expectancy Across the World")
+
+```
